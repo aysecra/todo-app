@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TodoList from "./components/TodoList/TodoList";
 import "./App.css";
 import Form from "./components/Form/Form";
+import TodoHeader from "./components/TodoHeader/TodoHeader";
 
 class App extends Component {
   constructor(props) {
@@ -47,9 +48,16 @@ class App extends Component {
     });
   };
 
+  removeTodo = (e) =>{
+    this.setState({
+      todos: this.state.todos.filter(todo => todo.id != e.target.value)
+    });
+  }
+
   render() {
     return (
       <div className="App">
+        <TodoHeader title="Todo List" />
         <Form
           userInput={this.state.userInput}
           onInputChange={this.onInputChange}
@@ -57,7 +65,7 @@ class App extends Component {
         />
         {this.state.todos.length > 0 && (
           <div className="list">
-            <TodoList todos={this.state.todos} />
+            <TodoList todos={this.state.todos} removeTodo={this.removeTodo}/>
           </div>
         )}
       </div>
